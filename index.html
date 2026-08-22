@@ -335,7 +335,9 @@
       radial-gradient(120% 140% at 90% 100%, rgba(217,178,107,.2), transparent 55%),
       var(--bg-card-2);
     display:flex; align-items:center; justify-content:center; font-size:52px;
+    overflow:hidden;
   }
+  .pd-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
   .pd-desc{ color:var(--ink-70); font-size:13.5px; line-height:1.5; margin-bottom:14px; }
   .pd-price{ font-weight:800; color:var(--gold); font-size:21px; margin-bottom:18px; }
   .field-label{ font-size:11.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-45); font-weight:700; margin:14px 0 8px; }
@@ -657,8 +659,8 @@
             "</div>" +
           "</div>";
         card.addEventListener("click", function(){
-          openSimpleProduct({
-            name:item.name, desc:item.desc, price:group.price, category:"Rolls", emoji:group.emoji, img:item.img
+          quickAddProduct({
+            name:item.name, desc:item.desc, price:group.price, category:"Rolls"
           });
         });
         grid.appendChild(card);
@@ -720,7 +722,7 @@
           "<div class='product-foot'>" + priceHtml + "<button class='add-btn' aria-label='Agregar'>+</button></div>" +
         "</div>";
       card.addEventListener("click", function(){
-        openSimpleProduct({ name:item.name, desc:null, price:item.price, category:"Entradas", emoji:item.emoji, img:item.img });
+        quickAddProduct({ name:item.name, desc:null, price:item.price, category:"Entradas" });
       });
       grid.appendChild(card);
     });
@@ -981,6 +983,21 @@
     cart.push(entry);
     saveCart();
     renderCartUI({ animate:true });
+  }
+
+  // Agrega 1 unidad directo al carrito, sin abrir la hoja de detalle
+  // (usado por Rolls y Entradas, donde no hace falta elegir nada extra).
+  function quickAddProduct(product){
+    addToCart({
+      id: uid(),
+      name: product.name,
+      category: product.category,
+      unitPrice: product.price,
+      qty: 1,
+      meta: product.desc || null,
+      consult: product.price==null
+    });
+    showToast(product.name + " agregado ✓");
   }
 
   function removeFromCart(id){
