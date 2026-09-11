@@ -128,6 +128,12 @@
   }
   .tab-btn:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
 
+  @media (max-width:380px){
+    .tabs{ gap:5px; padding:10px; }
+    .tab-btn{ padding:8px 11px; font-size:11.5px; gap:5px; }
+    .tab-btn .tab-emoji{ font-size:13px; }
+  }
+
   /* ---------- Main content ---------- */
   main{ position:relative; z-index:1; padding:20px 16px 10px; max-width:640px; margin:0 auto; }
   .category-panel{ display:none; }
@@ -403,6 +409,29 @@
   color: #ff4d4d; /* Rojo acento más vivo y legible en modo oscuro */
 }
 
+.horarios-container{
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap:wrap; gap:8px 10px;
+  margin:0 0 18px;
+}
+.horario-tag{
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  padding:7px 14px;
+  border-radius:999px;
+  font-size:11.5px; font-weight:500;
+  color:var(--ink-70);
+  white-space:nowrap;
+}
+.horario-tag strong{ color:#ff4d4d; font-weight:700; }
+.horario-divider{ color:var(--ink-45); font-size:12px; }
+@media (max-width:380px){
+  .horarios-container{ gap:6px 8px; }
+  .horario-tag{ padding:6px 11px; font-size:10.5px; }
+}
+
 </style>
 </head>
 <body>
@@ -415,10 +444,11 @@
     <p class="hero-title">Sushi fresco para vos</p>
     <p class="hero-sub">Delivery & Take Away <span class="dot"></span> Córdoba - B° Gral. Purreydon</p>
   </div>
-     <!-- BANNER DE HORARIOS AGREGADO -->
-    <div class="horarios-banner">
-      <p><strong>Horarios de Atención:</strong> Mediodía 12:00 a 15:00 hs | Noche 20:00 a 00:00 hs</p>
-    </div>
+   <div class="horarios-container">
+  <span class="horario-tag"><strong>Mediodía:</strong> 12:00 a 15:00 hs</span>
+  <span class="horario-divider">•</span>
+  <span class="horario-tag"><strong>Noche:</strong> 20:00 a 00:00 hs</span>
+</div>
 </div>
 
 <div class="tabs-wrap" id="tabsWrap">
