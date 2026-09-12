@@ -445,7 +445,7 @@
     <p class="hero-sub">Delivery & Take Away <span class="dot"></span> Córdoba - B° Gral. Purreydon</p>
   </div>
    <div class="horarios-container">
-  <span class="horario-tag"><strong>Mediodía:</strong> 12:00 a 15:00 hs</span>
+  <span class="horario-tag"><strong>Mediodía:</strong> 10:00 a 15:00 hs</span>
   <span class="horario-divider">•</span>
   <span class="horario-tag"><strong>Noche:</strong> 20:00 a 00:00 hs</span>
 </div>
@@ -568,7 +568,17 @@
         {name:"2 Variedades", count:2, price:22000, emoji:"🍱", img:"images/gohan-2-variedades.jpg"},
         {name:"3 Variedades", count:3, price:23000, emoji:"🍱", img:"images/gohan-3-variedades.jpg"},
         {name:"4 Variedades", count:4, price:20000, emoji:"🍱", img:"images/gohan-4-variedades.jpg"},
+        { name: "Poke Gohan (4 Variedades)", count: 4, price: 14000, emoji: "🥗", sub: "Elegí 4 proteínas a elección", img: "images/poke-gohan.jpg" },
         {name:"Veggie", count:1, price:15000, emoji:"🥦", sub:"Verduras de estación", img:"images/gohan-veggie.jpg"}
+      ]
+    },
+    bebidas: {
+      label: "Bebidas",
+      items: [
+        {name: "Pepsi 500cc", price: 2500, emoji: "🥤", img: "images/pepsi-500.jpg"},
+        {name: "Agua Saborizada 500cc", price: 2000, emoji: "🥤", img: "images/saborizada-500.jpg"},
+        {name: "Agua Mineral 500cc", price: 2000, emoji: "💧", img: "images/agua-500.jpg"},
+        {name: "Coca-Cola 1,5L", price: 5000, emoji: "🥤", img: "images/cocacola-15l.jpg"}
       ]
     },
     menu:{
@@ -577,7 +587,7 @@
   };
 
   var fmt = function(n){ return "$" + Number(n).toLocaleString("es-AR"); };
-  var TAB_EMOJI = { entradas:"🥟", rolls:"🍣", gohan:"🍱", menu:"🍽️" };
+  var TAB_EMOJI = { entradas:"🥟", rolls:"🍣", gohan:"🍱",bebidas:"🥤",menu:"🍽️" };
 
   // Devuelve el HTML de la foto de un producto: usa item.img si existe (con fallback
   // automático al emoji si la imagen no carga), o directamente el emoji si no hay foto.
@@ -605,7 +615,7 @@
   function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
   /* ---------------- RENDER TABS + PANELS ---------------- */
-  var tabOrder = ["entradas","rolls","gohan","menu"];
+  var tabOrder = ["entradas","rolls","gohan","bebidas","menu"];
   var tabsEl = document.getElementById("tabs");
   var tabsWrapEl = document.getElementById("tabsWrap");
 
@@ -715,6 +725,47 @@
     });
     panel.appendChild(grid);
   })();
+
+  /* ---- BEBIDAS panel ---- */
+(function renderBebidas(){
+  var panel = document.getElementById("panel-bebidas");
+
+  var grid = document.createElement("div");
+  grid.className = "products-grid";
+
+  DATA.bebidas.items.forEach(function(item){
+    var card = document.createElement("div");
+    card.className = "product-card";
+
+    card.innerHTML =
+      "<div class='product-photo'>" +
+        photoHtml(item.emoji, item.img, item.name) +
+      "</div>" +
+      "<div class='product-body'>" +
+        "<p class='product-name'>" + item.name + "</p>" +
+        "<p class='product-desc'>&nbsp;</p>" +
+        "<div class='product-foot'>" +
+          "<span class='product-price'>" + fmt(item.price) + "</span>" +
+          "<button class='add-btn' aria-label='Agregar'>+</button>" +
+        "</div>" +
+      "</div>";
+
+    card.addEventListener("click", function(){
+      openSimpleProduct({
+        name: item.name,
+        desc: null,
+        price: item.price,
+        category: "Bebidas",
+        emoji: item.emoji,
+        img: item.img
+      });
+    });
+
+    grid.appendChild(card);
+  });
+
+  panel.appendChild(grid);
+})();
 
   /* ---- ENTRADAS panel ---- */
   (function renderEntradas(){
